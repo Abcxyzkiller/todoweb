@@ -134,7 +134,7 @@ componentDidMount(){
               <td><Button color='link' onClick={()=>{this.toggleUpdate(item.Id)}}>
                 <i className="fas fa-edit" style={{ fontSize: "25px" }}></i>
               </Button>
-              <ModalUpdate Id={item.Id} dataupdate = {this.state.dataupdate} toggle={this.toggleUpdate} modal={this.state.modalupdate}/>
+              <ModalUpdate Id={item.Id} Name={item.Name} Start={item.Start} Due={item.Due} Note={item.Note} toggle={this.toggleUpdate} modal={this.state.modalupdate}/>
               </td>
               <td><Button onClick={event=> this.onDelete(item.Id)} Id={item.Id}color='link'>
                 <i className="fas fa-trash-alt" style={{ fontSize: "25px" }}></i>               

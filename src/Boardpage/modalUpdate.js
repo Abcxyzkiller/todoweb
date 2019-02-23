@@ -15,30 +15,37 @@ class ModalUpdate extends Component {
       text: "",
       isLoading: false,
       modal: false,
-      task: "",
-      start: "",
-      due: "",
-      note: "",
-    
+      task: this.props.Name,
+      start: this.props.Start,
+      due: this.props.Due,
+      note: this.props.Note,
+       
     }
   }
 
-  // fetchUpdate = () => {
-  //   this.setState({
-  //     isLoading: true
-  //   })
-  //   fetch("http://192.168.1.50:8080/api/task/gettask/"+this.props.Id , {
-  //     method: "GET",
-  //   })  
-  //       // .then(res => res.json())
-  //       .then(res => {
-  //           console.log("hihi")
-  //         this.setState({
-  //           data: res,
-  //           isLoading: false
-  //         })
-  //       })
-  // }
+  fetchUpdate = () => {
+    this.setState({
+      isLoading: true
+    })
+    fetch("http://192.168.1.50:8080/api/task/update", {
+      method: "POST",
+      body: JSON.stringify({
+        Name: this.state.task,
+        Start: this.state.start,
+        Due: this.state.due,
+        Note: this.state.note,
+        Id: Number(this.props.Id),
+        Id_user: Number(localStorage.getItem('Id')),
+      })
+    })  
+        .then(res => res.json())
+        .then(res => {
+          this.setState({
+            data: res,
+            isLoading: false
+          })
+        })
+  }
   onTask = (e) => {
     this.setState({
       task: e.target.value
@@ -59,7 +66,7 @@ class ModalUpdate extends Component {
       note: e.target.value
     })
   }
-  submitOnId = (event) => {
+  submitOnId = () => {
     window.location.reload()
     const { text } = this.state;
     this.fetchUpdate()
@@ -82,8 +89,8 @@ class ModalUpdate extends Component {
                     type="textarea"
                     id="Content"
                     name="Content"
-                    onChange={this.onTask}
-                    value={this.props.dataupdate.Name}
+                    onChange={(e)=>this.onTask(e)}
+                    value={this.state.task}
                   />
                 </Col>
               </FormGroup>
@@ -96,8 +103,8 @@ class ModalUpdate extends Component {
                     type="textarea"
                     id="Content"
                     name="Content"
-                    onChange={this.onStart}
-                    value={this.props.dataupdate.Start}
+                    onChange={(e)=>this.onStart(e)}
+                    value={this.state.start}
                   />
                 </Col>
               </FormGroup>
@@ -110,8 +117,8 @@ class ModalUpdate extends Component {
                     type="textarea"
                     id="Content"
                     name="Content"
-                    onChange={this.onDue}
-                    value={this.props.dataupdate.Due}
+                    onChange={(e)=>this.onDue(e)}
+                    value={this.state.due}
                   />
                 </Col>
               </FormGroup>
@@ -123,8 +130,8 @@ class ModalUpdate extends Component {
                     type="text"
                     id="Extra"
                     name="Extra"
-                    onChange={this.onNote}
-                    value={this.props.dataupdate.Note}
+                    onChange={(e)=>this.onNote(e)}
+                    value={this.state.note}
                   />
                 </Col>
               </FormGroup>
