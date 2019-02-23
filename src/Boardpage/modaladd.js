@@ -22,7 +22,7 @@ class ModalAdd extends Component {
     }
   }
 
-  fetchAdd = () => {
+  fetchAdd = (text) => {
     this.setState({
       isLoading: true
     })
@@ -64,7 +64,7 @@ class ModalAdd extends Component {
       note: e.target.value
     })
   }
-  submitOnId = (event) => {
+  submitOnId = () => {
     window.location.reload()
     const { text } = this.state;
     this.fetchAdd(text)

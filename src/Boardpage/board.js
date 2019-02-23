@@ -20,6 +20,7 @@ export default class board extends Component {
     this.setState({modal: !this.state.modal})
 }
 toggleUpdate=(Id)=>{
+  localStorage.setItem("taskId", Id)
   this.setState({modalupdate: !this.state.modalupdate})
   this.fetchUpdate(Id)
 }
@@ -78,13 +79,14 @@ componentDidMount(){
       fetch("http://192.168.1.50:8080/api/task/gettask/"+Id , {
         method: "GET",
       })  
-          .then(res => res.json())
+          .then(res=>res.json())
           .then(res => {
-              console.log("hihi")
+              
             this.setState({
               dataupdate: res,
               isLoading: false
             })
+            
           })
     }
   onChange=(event)=>{
@@ -93,7 +95,7 @@ componentDidMount(){
     })
   }
   render() {
-    
+    console.log(this.state.dataupdate)
     return (
       <div className="row" style={{ marginTop: "7.5%", textAlign: "center" }}>
         {/* <div className="col-md-2" style={{fontSize: "20px", paddingTop: "20px"}}>          
@@ -134,7 +136,14 @@ componentDidMount(){
               <td><Button color='link' onClick={()=>{this.toggleUpdate(item.Id)}}>
                 <i className="fas fa-edit" style={{ fontSize: "25px" }}></i>
               </Button>
-              <ModalUpdate Id={item.Id} Name={item.Name} Start={item.Start} Due={item.Due} Note={item.Note} toggle={this.toggleUpdate} modal={this.state.modalupdate}/>
+              <ModalUpdate
+               Id={item.Id} 
+               name = {this.state.dataupdate.Name} 
+               Start={this.state.dataupdate.Start} 
+               Due={this.state.dataupdate.Due} 
+               Note={this.state.dataupdate.Note}
+               toggle={this.toggleUpdate} 
+               modal={this.state.modalupdate}/>
               </td>
               <td><Button onClick={event=> this.onDelete(item.Id)} Id={item.Id}color='link'>
                 <i className="fas fa-trash-alt" style={{ fontSize: "25px" }}></i>               

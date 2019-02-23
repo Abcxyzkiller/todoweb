@@ -15,12 +15,12 @@ class ModalUpdate extends Component {
       text: "",
       isLoading: false,
       modal: false,
-      task: this.props.Name,
+      task: this.props.name,
       start: this.props.Start,
       due: this.props.Due,
-      note: this.props.Note,
-       
-    }
+      note: this.props.Note,   
+    } 
+    console.log(this.state.task)
   }
 
   fetchUpdate = () => {
@@ -34,7 +34,7 @@ class ModalUpdate extends Component {
         Start: this.state.start,
         Due: this.state.due,
         Note: this.state.note,
-        Id: Number(this.props.Id),
+        Id: Number(localStorage.getItem('taskId')),
         Id_user: Number(localStorage.getItem('Id')),
       })
     })  
@@ -73,8 +73,9 @@ class ModalUpdate extends Component {
   }
 
   render() {
-    console.log(this.props.Id)
-    console.log(this.props.dataupdate)
+   
+    console.log(this.props.name)
+    console.log(this.state.task)
     return (
 
       <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
