@@ -73,7 +73,6 @@ class ModalAdd extends Component {
   }
   render() {
     
-    console.log(this.props.Id)
     return (
       <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
         <ModalHeader toggle={this.toggle}>Add Task</ModalHeader>

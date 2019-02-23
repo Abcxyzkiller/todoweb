@@ -11,14 +11,17 @@ export default class board extends Component {
      modal: false,
      modaldel: false,
      modalupdate: false,
-     data: []
+     data: [],
+     dataupdate: [],
+     Name: ""
     }
   }
   toggle=()=>{
     this.setState({modal: !this.state.modal})
 }
-toggleUpdate=()=>{
+toggleUpdate=(Id)=>{
   this.setState({modalupdate: !this.state.modalupdate})
+  this.fetchUpdate(Id)
 }
 toggledel=()=>{
   this.setState({modaldel: !this.state.modaldel})
@@ -37,14 +40,13 @@ toggledel=()=>{
     })
         .then(response => response.json())
         .then(response => {
-            console.log(response)
+            
             this.setState({
                 data: response,
                 //id: response.Id,
                 isLoading: false
             });
         });
-        console.log(this.state.data)
 };
 componentDidMount(){
   this.fetchAlltask()
@@ -68,12 +70,28 @@ componentDidMount(){
         this.setState({modaldel: !this.state.modaldel});
         console.log(Id)
      } 
-     
-     /*onShow =() =>{
-       return(
-         this.state.data.map(item=>)
-       )
-     }*/
+     //call api update
+     fetchUpdate = (Id) => {
+      this.setState({
+        isLoading: true
+      })
+      fetch("http://192.168.1.50:8080/api/task/gettask/"+Id , {
+        method: "GET",
+      })  
+          .then(res => res.json())
+          .then(res => {
+              console.log("hihi")
+            this.setState({
+              dataupdate: res,
+              isLoading: false
+            })
+          })
+    }
+  onChange=(event)=>{
+    this.setState({
+      Name: event.target.value
+    })
+  }
   render() {
     
     return (
@@ -113,14 +131,13 @@ componentDidMount(){
               <td><center>{item.Start}</center></td>
               <td><center>{item.Due}</center></td>
               <td><center>{item.Note}</center></td>
-              <td><Button color='link' onClick={this.toggleUpdate}>
+              <td><Button color='link' onClick={()=>{this.toggleUpdate(item.Id)}}>
                 <i className="fas fa-edit" style={{ fontSize: "25px" }}></i>
               </Button>
-              <ModalUpdate toggle={this.toggleUpdate} modal={this.state.modalupdate}/>
+              <ModalUpdate Id={item.Id} dataupdate = {this.state.dataupdate} toggle={this.toggleUpdate} modal={this.state.modalupdate}/>
               </td>
               <td><Button onClick={event=> this.onDelete(item.Id)} Id={item.Id}color='link'>
-                <i className="fas fa-trash-alt" style={{ fontSize: "25px" }}></i>
-                
+                <i className="fas fa-trash-alt" style={{ fontSize: "25px" }}></i>               
               </Button>
               
               </td>

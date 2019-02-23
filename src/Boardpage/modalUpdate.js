@@ -19,32 +19,26 @@ class ModalUpdate extends Component {
       start: "",
       due: "",
       note: "",
+    
     }
   }
 
-  fetchUpdate = () => {
-    this.setState({
-      isLoading: true
-    })
-    fetch("http://192.168.1.50:8080/api/task/gettask"+this.props.Id , {
-      method: "GET",
-      body: JSON.stringify({
-        Name: this.state.task,
-        Start: this.state.start,
-        Due: this.state.due,
-        Note: this.state.note,
-        Id_user: Number(localStorage.getItem('Id'))
-      })
-    })  
-        .then(res => res.json())
-        .then(res => {
-            console.log(res)
-          this.setState({
-            data: res,
-            isLoading: false
-          })
-        })
-  }
+  // fetchUpdate = () => {
+  //   this.setState({
+  //     isLoading: true
+  //   })
+  //   fetch("http://192.168.1.50:8080/api/task/gettask/"+this.props.Id , {
+  //     method: "GET",
+  //   })  
+  //       // .then(res => res.json())
+  //       .then(res => {
+  //           console.log("hihi")
+  //         this.setState({
+  //           data: res,
+  //           isLoading: false
+  //         })
+  //       })
+  // }
   onTask = (e) => {
     this.setState({
       task: e.target.value
@@ -68,17 +62,14 @@ class ModalUpdate extends Component {
   submitOnId = (event) => {
     window.location.reload()
     const { text } = this.state;
-    this.fetchAdd(text)
-    
-
+    this.fetchUpdate()
   }
-  onChange = ()=>{
 
-  }
   render() {
-    
-    
+    console.log(this.props.Id)
+    console.log(this.props.dataupdate)
     return (
+
       <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
         <ModalHeader toggle={this.toggle}>Add Task</ModalHeader>
         <ModalBody>
@@ -92,7 +83,7 @@ class ModalUpdate extends Component {
                     id="Content"
                     name="Content"
                     onChange={this.onTask}
-                    value={this.state.task}
+                    value={this.props.dataupdate.Name}
                   />
                 </Col>
               </FormGroup>
@@ -106,7 +97,7 @@ class ModalUpdate extends Component {
                     id="Content"
                     name="Content"
                     onChange={this.onStart}
-                    value={this.state.start}
+                    value={this.props.dataupdate.Start}
                   />
                 </Col>
               </FormGroup>
@@ -120,7 +111,7 @@ class ModalUpdate extends Component {
                     id="Content"
                     name="Content"
                     onChange={this.onDue}
-                    value={this.state.due}
+                    value={this.props.dataupdate.Due}
                   />
                 </Col>
               </FormGroup>
@@ -133,7 +124,7 @@ class ModalUpdate extends Component {
                     id="Extra"
                     name="Extra"
                     onChange={this.onNote}
-                    value={this.state.note}
+                    value={this.props.dataupdate.Note}
                   />
                 </Col>
               </FormGroup>
