@@ -28,24 +28,18 @@ class signup extends Component {
         const todoData = this.state
         this.fetchRegisration(text)
         if (todoData.password !== todoData.passwordRewrite) {
-            // alert(todoData.data.Err)
             this.toggle1()
         } else if (todoData.password.length < 9) {
-            // alert(todoData.data.Err)
             this.toggle2()
         } else {
-            // alert(todoData.data.Success)
             this.toggle3()
-            // let path = "/";
-            // console.log(path)
-            // this.props.history.push(path)
         }
     }
     fetchRegisration = () => {
         this.setState({
             isRegistering: true,
         })
-        fetch("http://192.168.1.50:8080/api/user/register", {
+        fetch("http://192.168.1.53:8080/api/user/register", {
             method: "POST",
             body: JSON.stringify({
                 name: this.state.name,
@@ -53,7 +47,7 @@ class signup extends Component {
                 pass2: this.state.passwordRewrite
             })
         })
-            .then(res => res.json())
+            // .then(res => res.json())
             .then(res => {
                 this.setState({
                     data: res,
@@ -109,7 +103,7 @@ class signup extends Component {
                         </FormGroup>
                     </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                     <Col>
                         <FormGroup>
                             <Label for="number" >number</Label>
@@ -117,7 +111,7 @@ class signup extends Component {
                             <Input type="number" id="number" name="number" placeholder="098.." onChange={this.handleNumber} value={this.state.number}></Input>
                         </FormGroup>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row form>
                     <Col>
                         <FormGroup>

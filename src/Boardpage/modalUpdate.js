@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import 'antd/dist/antd.css';
 import moment from 'moment'
 import { fileToObject } from 'antd/lib/upload/utils';
-
+import PropTypes from 'prop-types'
 
 const format = 'hh:mm'
 class ModalUpdate extends Component {
@@ -14,20 +14,28 @@ class ModalUpdate extends Component {
     this.state = {
       text: "",
       isLoading: false,
-      modal: false,
-      task: this.props.name,
-      start: this.props.Start,
-      due: this.props.Due,
-      note: this.props.Note,   
+      modal: false,   
+      getValuesFromProps: true
     } 
     console.log(this.state.task)
   }
+componentDidUpdate(){
+  if(this.state.getValuesFromProps && this.props.name){
+  this.setState({
+  task: this.props.name,
+  start: this.props.Start,
+  due: this.props.Due,
+  note: this.props.Note,
+  getValuesFromProps: false
+})
 
+  }
+}
   fetchUpdate = () => {
     this.setState({
       isLoading: true
     })
-    fetch("http://192.168.1.50:8080/api/task/update", {
+    fetch("http://192.168.1.53:8080/api/task/update", {
       method: "POST",
       body: JSON.stringify({
         Name: this.state.task,
@@ -48,21 +56,25 @@ class ModalUpdate extends Component {
   }
   onTask = (e) => {
     this.setState({
+      isEditting: true,
       task: e.target.value
     })
   }
   onStart = (e) => {
     this.setState({
+      isEditting: true,
       start: e.target.value
     })
   }
   onDue = (e) => {
     this.setState({
+      isEditting: true,
       due: e.target.value
     })
   }
   onNote = (e) => {
     this.setState({
+      isEditting: true,
       note: e.target.value
     })
   }
@@ -71,7 +83,11 @@ class ModalUpdate extends Component {
     const { text } = this.state;
     this.fetchUpdate()
   }
-
+  isActive=()=>{
+    if(this.state.task&&this.state.start&&this.state.due){
+     return true 
+    }
+  }
   render() {
    
     console.log(this.props.name)
@@ -99,7 +115,6 @@ class ModalUpdate extends Component {
               <FormGroup>
                 <Col sm="12" md={{ size: 8 }}>
                   <Label for="object">Start</Label><br />
-                  {/* <TimePicker defaultValue={moment('12:08', format)} format={format} /> */}
                   <Input
                     type="textarea"
                     id="Content"
@@ -113,7 +128,6 @@ class ModalUpdate extends Component {
               <FormGroup>
                 <Col sm="12" md={{ size: 8 }}>
                   <Label for="money">Due date</Label><br />
-                  {/* <TimePicker defaultValue={moment('12:08', format)} format={format} /> */}
                   <Input
                     type="textarea"
                     id="Content"
@@ -143,8 +157,8 @@ class ModalUpdate extends Component {
           <Button
             color="primary"
             onClick={this.submitOnId}
-          >
-         
+            active={this.isActive()}
+          >   
             Submit
             </Button>
         </ModalFooter>
@@ -152,6 +166,10 @@ class ModalUpdate extends Component {
     )
   }
 }
-
+ModalUpdate.propTypes={
+  task: PropTypes.element.isRequired,
+  start: PropTypes.element.isRequired,
+  due: PropTypes.element.isRequired
+}
 
 export default ModalUpdate

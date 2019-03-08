@@ -5,7 +5,7 @@ module.exports = {
 
       config.proxy = {
         '/api': {
-          target: 'http://192.168.1.50',
+          target: 'http://192.168.1.41',
           changeOrigin: true,
         },
       };
