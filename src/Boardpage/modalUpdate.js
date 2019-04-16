@@ -35,7 +35,7 @@ componentDidUpdate(){
     this.setState({
       isLoading: true
     })
-    fetch("http://192.168.1.53:8080/api/task/update", {
+    fetch("http://192.168.1.27:8080/api/task/update", {
       method: "POST",
       body: JSON.stringify({
         Name: this.state.task,

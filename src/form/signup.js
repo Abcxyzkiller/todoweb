@@ -39,7 +39,7 @@ class signup extends Component {
         this.setState({
             isRegistering: true,
         })
-        fetch("http://192.168.1.53:8080/api/user/register", {
+        fetch("http://192.168.1.27:8080/api/user/register", {
             method: "POST",
             body: JSON.stringify({
                 name: this.state.name,

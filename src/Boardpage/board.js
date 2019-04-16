@@ -41,7 +41,7 @@ export default class board extends Component {
       isLoading: true
     });
 
-    fetch("http://192.168.1.53:8080/api/task/getalltasks/" + localStorage.getItem('Id'), {
+    fetch("http://192.168.1.27:8080/api/task/getalltasks/" + localStorage.getItem('Id'), {
       method: 'GET'
     })
       .then(response => response.json())
@@ -62,7 +62,7 @@ export default class board extends Component {
     this.setState({
       isLoading: true,
     })
-    fetch("http://192.168.1.53:8080/api/task/delete/" + Id, {
+    fetch("http://192.168.1.27:8080/api/task/delete/" + Id, {
       method: "Delete"
     })
       .then(() => {
@@ -81,7 +81,7 @@ export default class board extends Component {
     this.setState({
       isLoading: true
     })
-    fetch("http://192.168.1.53:8080/api/task/gettask/" + Id, {
+    fetch("http://192.168.1.27:8080/api/task/gettask/" + Id, {
       method: "GET",
     })
       .then(res => res.json())
